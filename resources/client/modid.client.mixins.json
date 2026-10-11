@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "package": "com.example.client.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "ExampleClientMixin",
+        "ItemScrollerMixin",
+        "AspectRatioMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

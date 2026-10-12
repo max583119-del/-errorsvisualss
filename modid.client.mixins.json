@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "package": "com.example.client.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "ExampleClientMixin",
+        "InGameHudMixin",
+        "InGameOverlayRendererMixin",
+        "ItemScrollerMixin",
+        "AspectRatioMixin",
+        "ZoomMixin",
+        "ZoomScrollMixin",
+        "WinterNightMixin",
+        "WinterFogMixin"
+    ],
+    "injectors": { "defaultRequire": 1 }
+}

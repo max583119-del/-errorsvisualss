@@ -1,0 +1,9 @@
+{
+    "required": true,
+    "package": "com.example.ias.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "MinecraftClientAccessor"
+    ],
+    "injectors": { "defaultRequire": 1 }
+}

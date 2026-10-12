@@ -1,0 +1,58 @@
+package com.example.client;
+
+import com.example.client.config.ErrorsConfig;
+import com.example.client.gui.ErrorsVisualsScreen;
+import com.example.client.particle.ParticleSpawner;
+import com.example.client.render.ChinaHatRenderer;
+import com.example.client.render.JumpCircleRenderer;
+import com.example.client.render.PetRenderer;
+import com.example.client.render.TargetEspRenderer;
+import com.example.client.render.TrailRenderer;
+import com.example.client.render.WinterRenderer;
+import com.example.client.zoom.ZoomManager;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class ExampleModClient implements ClientModInitializer {
+    public static final Logger LOGGER = LoggerFactory.getLogger("errorsVisuals");
+    public static KeyBinding openMenuKey;
+    public static KeyBinding zoomKey;
+
+    @Override
+    public void onInitializeClient() {
+        LOGGER.info("errorsVisuals: загружен!");
+        ErrorsConfig.load();
+
+        ParticleSpawner.register();
+        TargetEspRenderer.register();
+        TrailRenderer.register();
+        JumpCircleRenderer.register();
+        ChinaHatRenderer.register();
+        PetRenderer.register();
+        WinterRenderer.register();
+
+        openMenuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.errorsvisuals.menu", InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_RIGHT_SHIFT, KeyBinding.Category.MISC));
+
+        zoomKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.errorsvisuals.zoom", InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_C, KeyBinding.Category.MISC));
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (openMenuKey.wasPressed()) {
+                if (client.currentScreen == null) {
+                    client.setScreen(new ErrorsVisualsScreen());
+                }
+            }
+            ZoomManager.isZooming = zoomKey.isPressed();
+            ZoomManager.getMultiplier();
+        });
+    }
+}
